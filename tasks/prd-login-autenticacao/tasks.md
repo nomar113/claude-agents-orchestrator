@@ -6,8 +6,8 @@
 - [x] 2.0 Backend — Tenancy: group_id, backfill e isolamento de dados
 - [x] 3.0 Backend — API key para automacao do iPhone + groupId no SQS
 - [x] 4.0 Frontend — Sessao, telas de login/registro e rotas protegidas
-- [ ] 5.0 Google Sign-In (backend + app iOS/web)
-- [ ] 6.0 Biometria iOS — Face ID + Keychain
-- [ ] 7.0 E-mail — Recuperacao e troca de senha (Resend)
+- [x] 5.0 Google Sign-In (backend + app iOS/web)
+- [x] 6.0 Biometria iOS — Face ID + Keychain
+- [x] 7.0 E-mail — Recuperacao e troca de senha (Resend)
 - [ ] 8.0 Compartilhamento — Convites de grupo + tela de perfil
 - [ ] 9.0 E2E Playwright + Migracao/cutover de producao

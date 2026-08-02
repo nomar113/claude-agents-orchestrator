@@ -1,0 +1,53 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[13:17:58] Sequential Task Runner
+[13:17:58] PRD:   tasks/prd-login-autenticacao
+[13:17:58] Repos: /Volumes/SSD480GB/projects/claude-agents-orchestrator /Volumes/SSD480GB/projects/controlai /Volumes/SSD480GB/projects/controlai-frontend
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[13:17:58] tasks.md: tasks/prd-login-autenticacao/tasks.md
+[13:17:58] Tasks encontradas: 9
+[13:17:58]   task 1: # Tarefa 1.0: Backend — Fundacao de autenticacao (users, JWT, register/login/refresh/logout) [concluída (local)]
+[13:17:58]   task 2: # Tarefa 2.0: Backend — Tenancy: group_id, backfill e isolamento de dados [concluída (tasks.md)]
+[13:17:58]   task 3: # Tarefa 3.0: Backend — API key para automacao do iPhone + groupId no SQS [concluída (tasks.md)]
+[13:17:58]   task 4: # Tarefa 4.0: Frontend — Sessao, telas de login/registro e rotas protegidas [concluída (local)]
+[13:17:58]   task 5: # Tarefa 5.0: Google Sign-In (backend + app iOS/web) [interrompida (será retomada)]
+[13:17:58]   task 6: # Tarefa 6.0: Biometria iOS — Face ID + Keychain [interrompida (será retomada)]
+[13:17:58]   task 7: # Tarefa 7.0: E-mail — Recuperacao e troca de senha (Resend) [pendente]
+[13:17:58]   task 8: # Tarefa 8.0: Compartilhamento — Convites de grupo + tela de perfil [pendente]
+[13:17:58]   task 9: # Tarefa 9.0: E2E Playwright + Migracao/cutover de producao [pendente]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[13:17:58] ⚠ Task 1 já concluída — pulando
+[13:17:58] ⚠ Task 2 já concluída — pulando
+[13:17:58] ⚠ Task 3 já concluída — pulando
+[13:17:58] ⚠ Task 4 já concluída — pulando
+[13:17:58] ⚠ Task 5 já concluída — pulando
+[13:17:58] ⚠ Task 6 já concluída — pulando
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[13:17:58] Executando task 7/9: # Tarefa 7.0: E-mail — Recuperacao e troca de senha (Resend)
+[13:17:58] Arquivo: tasks/prd-login-autenticacao/7_task.md
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[13:17:58] Iniciando claude (session: f7931944-bbb1-465f-bcbb-7290bd25f2d3)
+528 testes passando, 0 falhas. Tarefa 7 totalmente concluída com todos os problemas do review corrigidos.
+
+---
+
+## Resumo Final
+
+**Tarefa 7.0 — E-mail: Recuperação e troca de senha (Resend)** está completa e aprovada.
+
+### Correções aplicadas após o task-reviewer
+
+| Problema | Correção |
+|----------|----------|
+| **MAJOR-1** Race condition em `MarkPasswordResetTokenUsedProvider` | Substituído `findById + save` por `@Modifying @Query` UPDATE atômico com `WHERE usedAt IS NULL` |
+| **MAJOR-2** `RestClient.create()` direto no bean | Injetado `RestClient.Builder` via construtor em `ResendEmailClient` |
+| **MAJOR-3** FK sem `ON DELETE CASCADE` e sem índice | Migration `V33` recria a FK com `ON DELETE CASCADE` (índice implícito já existia) |
+| **MINOR-2** Mensagens `require()` em português no domínio | Alteradas para inglês em `ResetPasswordUseCase` e `ChangePasswordUseCase` |
+| **MINOR-4** Detecção de erro 400 por string matching | Criada classe `HttpError` com `status: number` tipado; `ResetPasswordPage` usa `instanceof HttpError && err.status === 400` |
+| **MINOR-5** Teste com instância descartada | Simplificado `ChangePasswordUseCase should fail when new password is shorter than 8 chars` |
+| Regressão nos testes de authService | `HttpError` mantém formato `"HTTP ${status}: ${body}"` para retrocompatibilidade |
+
+### Testes finais ✅
+- **Backend unit** (PasswordUseCasesTest): 17/17
+- **Backend integration** (ForgotResetPasswordIntegrationTest): 15/15
+- **Frontend Vitest completo**: 528/528
+[13:37:43] Commitando em: /Volumes/SSD480GB/projects/claude-agents-orchestrator
