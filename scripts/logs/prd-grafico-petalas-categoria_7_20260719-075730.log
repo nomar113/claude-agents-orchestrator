@@ -1,0 +1,13 @@
+**Task 7.0 concluída e aprovada pelo task-reviewer** — o `PetalDistributionChart` está integrado à `ByCategoryPage`, e todas as observações do review foram resolvidas.
+
+**O que foi entregue:**
+- Gráfico de pétalas renderizado entre o card de resumo e a lista, alimentado pelo **mesmo array filtrado** da lista (`EXPENSE && expected > 0 && actual > 0`) — categorias e cores idênticas por construção entre pétala, legenda e linhas (cores chaveadas por `categoryId`). Bloco completo com título "DISTRIBUIÇÃO", indicador "Limite = 100%" e legenda (PRD 2.1/2.2).
+- Pétala, legenda e linha da lista abrem o mesmo `CategoryDetailSheet` via um único handler `openCategory` (PRD 2.3). O contrato do componente não foi alterado; o botão "Ver gastos detalhados" (obrigatório no contrato) rola até a lista, espelhando o padrão da Tab1 — decisão registrada no `7_task.md`.
+- Estado vazio continua substituindo o bloco do gráfico (PRD 7.1).
+- 6 novos testes de integração na página, cobrindo tudo da subtarefa 7.3.
+
+**Review:** veredito **aprovado**, sem issues críticos ou major. Das 3 observações minor, corrigi as duas de teste na hora (o stub de `scrollIntoView` agora é restaurado com try/finally e o assert verifica que o elemento rolado é de fato a `.bcp-list`) e documentei a terceira (decisão do `onViewDetailsClick`) no artefato da task. Relatório completo em `tasks/prd-grafico-petalas-categoria/7_task_review.md`.
+
+**Verificações:** suíte completa 405/405 verde, arquivo da página 23/23 após os ajustes, `npm run build` (tsc + vite) ok, lint sem apontamentos nos arquivos tocados.
+
+`tasks.md` atualizado — restam a **8.0** (pontos de entrada Tab1/BudgetPage) e a **9.0** (verificação final) para fechar a feature.

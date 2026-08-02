@@ -1,0 +1,12 @@
+**Task 6.0 concluída e aprovada no review.** O widget de pétalas agora é interativo e acessível: toque na pétala, no overlay de toque ou no item da legenda dispara o mesmo `onPetalClick(categoryId)` (handler único compartilhado via `data-category-id`, estabilizado com `useCallback`), com suporte a teclado (Enter/Space com `preventDefault`) e foco visível.
+
+**O que foi implementado**
+- `PetalDistributionChart.tsx`: `role="button"`, `tabIndex={0}` e `aria-label` no formato `"{categoria}: {n}% do limite"` (+ `", acima do limite"` em estouro) em cada pétala; legenda clicável reutilizando os mesmos handlers; comprimento mínimo de pétala (30% do raio do limite) e overlay invisível 44×44 sobre pétalas curtas.
+- `PetalDistributionChart.css`: foco visível em pétala e legenda, tap target da legenda ampliado sem inflar o layout, overlay transparente clicável.
+- `PetalDistributionChart.test.tsx`: 13 testes novos cobrindo todos os casos exigidos pela task (clique/teclado/aria/tap target).
+
+**Validações**: 43/43 testes do componente, 394/394 na suíte completa, ESLint limpo nos arquivos alterados, `npm run build` (tsc + vite) passando. `tasks.md` e `6_task.md` marcados como concluídos.
+
+**Review (`6_task_review.md`)**: aprovado com 4 observações minor, nenhuma bloqueante. Já corrigi a principal (disco central interceptava toques sobre os overlays — `pointer-events: none` aplicado, testes re-executados e passando). As demais ficam registradas: sobreposição de overlays com muitas categorias é trade-off geométrico documentado; trocar `<li role="button">` por `<button>` dentro do `<li>` é candidato a refactor futuro; e a validação manual no `ionic serve` só será possível na Task 7.0, quando o componente for integrado à Tab1 — mesma pendência já registrada na review da Task 5.
+
+Próximo passo do workflow: `/executar-task tasks/prd-grafico-petalas-distribuicao/7_task.md` (integração com a Tab1 e checks finais).

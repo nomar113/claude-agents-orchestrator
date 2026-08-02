@@ -1,0 +1,15 @@
+**Task 4.0 concluída e aprovada na review.** O widget está visualmente completo no modo com dados: título "DISTRIBUIÇÃO", círculo tracejado de referência com indicador "Limite = 100%", legenda com as mesmas cores das pétalas e CSS alinhado ao tema escuro com IBM Plex (requisitos 1.5–1.7 do PRD).
+
+**O que aconteceu nesta sessão:**
+
+- Encontrei as subtarefas 4.1–4.4 já implementadas por uma sessão anterior interrompida. Completei as pendências reais: os 6 refinamentos herdados das reviews 2.0/3.0 endereçados a esta task (constantes nomeadas do rótulo/geometria, clamp `MAX_HALF_WIDTH` para 1 categoria com teste novo, cor do disco central movida para CSS), e removi o harness temporário `__petal_visual__.test.tsx` esquecido, que quebraria a suite em outro ambiente.
+- Validei visualmente com screenshot headless (Chromium via Playwright, viewport 390px): pétala pequena de 24% legível com rótulo externo, overflows 112%/187% ultrapassando o círculo em cor de alerta, legenda idêntica às pétalas, caso N=1 correto. O `ionic serve` de ponta a ponta fica para a Task 7.0 (o componente ainda não está integrado à Tab1), mesmo precedente da Task 3.0.
+- **Review do `task-reviewer`: APROVADO**, sem críticos ou major. Ele re-executou todos os checks e confirmou numericamente a heurística de legibilidade do rótulo externo. Dos 3 minors, apliquei os 2 objetivos na hora (disco central agora usa `var(--ion-background-color, #0d1028)`; `width="100%"` redundante removido do SVG) e re-rodei testes + typecheck — tudo verde.
+
+**Checks finais:** suite completa 373/373, componente 28/28, `tsc --noEmit` limpo, eslint limpo, `npm run build` ok. Subtarefas marcadas em `4_task.md`, task 4.0 marcada em `tasks.md`, review em `4_task_review.md`.
+
+**Notas registradas para as próximas tasks:**
+- **Task 6.0**: decidir o comportamento do overflow marginal (`ratio` entre 1 e 1.005 exibe "100%" com cor de alerta) antes de compor o `aria-label` "acima do limite" — pendência aberta desde a review 3.0.
+- **Task 7.0**: conferir no `ionic serve` se o disco central chapado casa com o fundo em gradiente da Tab1; e o minor 3 do reviewer (com 2+ categorias estouradas, a cor de alerta única deixa de distinguí-las na legenda) é uma decisão de produto a registrar.
+
+Próximo passo do workflow: `/executar-task tasks/prd-grafico-petalas-distribuicao/5_task.md` (estado vazio + botão "Ver gastos detalhados").

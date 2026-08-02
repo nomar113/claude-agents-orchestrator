@@ -1,0 +1,15 @@
+**Task 9 concluída e aprovada no review** — a feature "Gráfico de Pétalas por Categoria" está fechada, com uma única pendência que só você pode fazer: o gesto do sheet no simulador iOS (9.4).
+
+**Checks (9.1) — todos verdes:**
+- Frontend: typecheck sem erros, **410 testes** passando, build OK, lint com 0 erros (19 warnings pré-existentes fora da feature).
+- Backend: `./gradlew build` com **363 testes** passando. A primeira execução falhou com 218 testes porque o Docker estava parado — os testes de integração precisam do MySQL do docker-compose (diferente do que o CLAUDE.md do repo diz sobre H2). Subi o Docker e os containers, e deixei ambos rodando; os servidores de dev que usei (Vite e Spring Boot) foram encerrados.
+
+**Smoke E2E (9.2):** criei `cypress/e2e/by-category-smoke.cy.ts` no frontend — 3 testes passando cobrindo a jornada do PRD: Tab1 → tela "Por categoria" → linha estourada → sheet com "Estourou em R$" → filtro por cartão. O spec é tolerante a dados (o mês corrente pode legitimamente estar vazio).
+
+**Verificação manual (9.3):** fiz via browser real contra a API, com screenshots. Os números batem ponta a ponta: a tela em junho/2026 mostra **R$ 12.069,50**, que é exatamente a soma dos `actual` das 16 categorias com orçamento na API; a diferença para o "Real" da Tab1 (R$ 13.114,50) é a documentada na techspec (compras sem categoria). O sheet de "Presentes" mostra "Estourou em R$ 12,85" (762,85 − 750,00) e as 2 compras somam exatamente o gasto da categoria. Estado vazio de julho (requisito 7.1) e navegação de meses OK. Descoberta relevante: a rota `/budget` hoje redireciona para `/tab1` — o Orçamento Mensal foi consolidado na Tab1, e o deep-link "Ver gastos detalhados" preserva o mês selecionado (PRD 6.2 atendido); `BudgetPage.tsx` ficou órfã no código, candidata a remoção futura.
+
+**Acessibilidade (9.5):** rótulos das linhas no formato exato do PRD (+ ", acima do limite"), sheet anuncia o título via `aria-labelledby`, e estouro é comunicado por badge textual e valor em reais, não só por cor.
+
+**Review:** o task-reviewer aprovou com 3 observações minors no spec (espera fixa de 500ms, duplicação da navegação, fallbacks silenciosos) — **apliquei as três e reexecutei: 3/3 verde**, lint e typecheck limpos. Artefato em `tasks/prd-grafico-petalas-categoria/9_task_review.md`, e a task 9 está marcada como concluída no `tasks.md`.
+
+**Fica com você:** validar o gesto do sheet (arrastar para fechar, expandir, scroll interno) no simulador iOS — deixei isso documentado no `9_task.md`. O smoke spec novo está untracked no git do `controlai-frontend`, junto com as mudanças de backend das tasks anteriores, quando quiser commitar.

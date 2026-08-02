@@ -1,0 +1,12 @@
+**Task 5.0 finalizada e aprovada no review.** O `task-reviewer` deu veredicto **aprovado com observações** — nenhum problema crítico ou importante, e ele revalidou de forma independente os 30 testes do componente, os 381 da suite, `tsc` e ESLint.
+
+Das 4 observações menores, resolvi a única acionável agora: o `console.warn` defensivo saiu do `useMemo` (que voltou a ser uma derivação pura) e foi para um `useEffect` dedicado, eliminando o risco de warn duplicado em StrictMode. Revalidei depois da mudança: 30/30 testes, ESLint e typecheck limpos. As demais ficaram registradas no artefato: o `aria-label` idêntico ao texto visível é intencional (o PRD pede rótulo acessível explícito), a duplicação das cores outline no CSS é candidata a refactor futuro em `variables.css`, e a validação visual no `ionic serve` fica para a Task 7.0, quando o componente for montado na Tab1.
+
+O reviewer também validou as decisões de design — em especial o `<button>` nativo no lugar de `IonButton` (a Tab1 não usa `IonButton` em lugar nenhum) e a ocultação do indicador "Limite = 100%" no estado vazio.
+
+Estado final:
+- `tasks.md`: task 5.0 marcada como concluída (restam 6.0 e 7.0).
+- `5_task_review.md`: artefato de review gerado, com nota de resolução das observações.
+- Repo `controlai-frontend`: componente, CSS e testes atualizados (arquivos ainda não commitados, junto com o restante das tasks 1–4).
+
+Próximo passo natural: `/executar-task tasks/prd-grafico-petalas-distribuicao/6_task.md` (interação por toque/teclado e acessibilidade das pétalas).

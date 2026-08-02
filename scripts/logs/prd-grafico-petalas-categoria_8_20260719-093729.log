@@ -1,0 +1,14 @@
+## Tarefa 8.0 concluída e aprovada no review ✅
+
+**O que foi implementado** (repositório `controlai-frontend`, alterações não commitadas):
+
+- **Tab1 (PRD 6.1)** — o botão "Ver gastos detalhados" do gráfico de pétalas agora navega para `/by-category?month={mês corrente}` via `history.push`, substituindo o scroll anterior. O `purchasesSectionRef`, que ficou sem uso, foi removido.
+- **BudgetPage (PRD 6.2)** — novo botão "Por categoria" ao final da seção de gastos (visível fora do modo edição, tap target de 44px) navegando para `/by-category` com o mês selecionado na página — comprovado por teste que navega para o mês anterior antes de clicar.
+- **BudgetPage (PRD 4.8)** — tocar em uma linha de categoria de gasto abre o `CategoryDetailSheet` com o mês da página. O sheet deriva o item do `summary` por id (fica em sincronia após refresh silencioso), fecha ao trocar de mês e não abre em modo edição.
+- **Voltar (PRD 6.3)** — nada a mudar: `history.push` preserva a pilha e a `ByCategoryPage` usa `IonBackButton`, então o voltar retorna à origem nos dois fluxos.
+
+**Testes**: teste de scroll da Tab1 substituído pelo de navegação; 5 testes novos na BudgetPage (sheet abre com o mês certo, não abre em edição, fecha ao trocar mês, link preserva o mês, link oculto em edição), com relógio fixado para estabilidade. **Checks**: 410 testes verdes, `tsc --noEmit` limpo, lint sem apontamentos novos, build OK.
+
+**Review (task-reviewer)**: APROVADO COM OBSERVAÇÕES — nenhum problema crítico ou major. Das 3 observações minor, corrigi 2 na hora (derivação do item por id e relógio fixo nos testes); a terceira — o link "Por categoria" fica dentro da seção colapsável de gastos e some se ela for recolhida — é decisão de produto e ficou anotada para você validar no smoke da Tarefa 9.0. Artefato em `tasks/prd-grafico-petalas-categoria/8_task_review.md`, e a tarefa está marcada como concluída no `tasks.md`.
+
+**Próximo passo**: Tarefa 9.0 — verificação final (checks, smoke E2E com Cypress e verificação manual via `ionic serve`).

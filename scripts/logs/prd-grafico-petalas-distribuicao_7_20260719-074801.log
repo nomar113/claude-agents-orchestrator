@@ -1,0 +1,12 @@
+**Task 7.0 concluída e aprovada pelo task-reviewer — a feature Gráfico de Pétalas (Distribuição) está 100% implementada (7/7 tasks).**
+
+**Veredicto da review: APROVADO COM OBSERVAÇÕES** — nenhum issue crítico ou major. Artefato em `tasks/prd-grafico-petalas-distribuicao/7_task_review.md`.
+
+O que foi entregue nesta sessão:
+
+- **Integração validada**: a ramificação leitura/edição no `Tab1.tsx` (chart no modo leitura, `BudgetCategoryCard` no modo edição), os callbacks `onPetalClick` → `handleCategoryClick` (filtro de categoria, req. 4.1) e `onViewDetailsClick` → scroll suave até "Últimas Compras" (req. 5.2) já estavam no working tree de sessão anterior; validei que tudo segue a techspec — mesma fonte `BudgetSummary`, sem fetch novo, memoização com `useMemo`/`useCallback`.
+- **Correções minhas**: 4 erros de lint no `Tab1.tsx` (símbolos mortos, incluindo o `selectedCategoryName` introduzido pela feature), 3 mocks `any` tipados no `Tab1.test.tsx`, e — atendendo ao achado #1 da review — o mock de `Element.prototype.scrollIntoView` agora é restaurado via `try/finally`.
+- **Checks finais**: 399/399 testes passando, `npm run build` (tsc + vite) ok, eslint 0 erros nos arquivos da task. O reviewer revalidou tudo de forma independente. Nota: o lint do projeto inteiro tem ~50 erros pré-existentes em arquivos de outras features — fora do escopo.
+- **Marcações**: task 7.0 concluída em `tasks.md`; subtarefas e testes marcados no `7_task.md`.
+
+Achados minor restantes da review (não bloqueantes, registrados no artefato): identidade do `handleCategoryClick` muda ao alternar filtro (trade-off aceito), header "N itens" pode divergir do nº de pétalas (comportamento conforme techspec), e a validação interativa completa (toque, teclado, leitor de tela, simulador iOS) ficou delegada à fase de QA — próximo passo natural é rodar `/executar-review` da feature e depois `/executar-qa`.

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.ramon.petal-tasks</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Volumes/SSD480GB/projects/claude-agents-orchestrator/scripts/run-petal-tasks.sh</string>
+    </array>
+
+    <!-- WorkingDirectory e logs ficam no home: o launchd nao consegue abrir arquivos
+         no volume externo antes do spawn (TCC), o que causava exit 78 EX_CONFIG.
+         O proprio script faz cd para o diretorio do projeto. -->
+    <key>WorkingDirectory</key>
+    <string>/Users/ramonmesquita</string>
+
+    <!-- launchd nao herda o PATH do shell: inclui homebrew (claude) e node do nvm -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/Users/ramonmesquita/.nvm/versions/node/v24.13.0/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>HOME</key>
+        <string>/Users/ramonmesquita</string>
+    </dict>
+
+    <!-- Relanca somente quando o script sai com codigo != 0.
+         Saidas com 0 (tudo concluido, HALT presente) encerram de vez. -->
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- Espera minima entre relancamentos, evita loop rapido de respawn -->
+    <key>ThrottleInterval</key>
+    <integer>300</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/ramonmesquita/Library/Logs/petal-tasks.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/ramonmesquita/Library/Logs/petal-tasks.err.log</string>
+</dict>
+</plist>
