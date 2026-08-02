@@ -45,6 +45,43 @@ Após cada task concluída com sucesso, o script:
 2. Faz `git add -A` + `git commit` em todos os repos com alterações
 3. Faz `git push` (a menos que `--no-push` esteja ativo)
 
+## Rodando em background (recomendado)
+
+Use `nohup` para que o processo rode independente da sessão do terminal:
+
+```bash
+nohup ./sequential-script/run.sh tasks/prd-login-autenticacao/ \
+  --repos /Volumes/SSD480GB/projects/controlai,/Volumes/SSD480GB/projects/controlai-frontend \
+  > tasks/prd-login-autenticacao/run.log 2>&1 &
+
+echo "PID: $!"
+```
+
+## Monitorando a execução
+
+```bash
+# Acompanhar o log em tempo real
+tail -f tasks/prd-login-autenticacao/run.log
+
+# Ver apenas as últimas linhas
+tail -50 tasks/prd-login-autenticacao/run.log
+
+# Verificar se o processo ainda está vivo
+pgrep -fa "run.sh"
+
+# Ver quais tasks já concluíram ou estão rodando
+grep "Executando task\|concluída\|Falhas" tasks/prd-login-autenticacao/run.log
+
+# Verificar estado local (.progress)
+ls tasks/prd-login-autenticacao/.progress/
+```
+
+Para parar o processo:
+
+```bash
+pkill -f "run.sh"
+```
+
 ## Dependências
 
 - `claude` — Claude Code CLI instalado e autenticado
