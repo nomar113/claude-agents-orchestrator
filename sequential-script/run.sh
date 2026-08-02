@@ -94,6 +94,9 @@ done
 # Diretório de estado (dentro da pasta da PRD, ignorado pelo .gitignore)
 PROGRESS_DIR="${TASK_DIR}/.progress"
 
+# Arquivo de resumo de tasks (fonte autoritativa de tasks concluídas)
+TASKS_MD="${TASK_DIR}/tasks.md"
+
 # Timeout por task em segundos (4h 45min — abaixo da janela de 5h do Claude)
 TASK_TIMEOUT_SECS=17100
 
@@ -120,7 +123,18 @@ sep()  { echo "━━━━━━━━━━━━━━━━━━━━━�
 
 ensure_progress_dir() { mkdir -p "${PROGRESS_DIR}"; }
 
-is_completed() { [[ -f "${PROGRESS_DIR}/${1}.done" ]]; }
+# Verifica se a task está marcada como [x] no tasks.md
+is_done_in_tasks_md() {
+    local task_num="$1"
+    [[ -f "${TASKS_MD}" ]] || return 1
+    # Linha esperada: - [x] N.0 ... (onde N é o número da task)
+    grep -qE "^\- \[x\] ${task_num}\." "${TASKS_MD}"
+}
+
+# Considera concluída se marcada no tasks.md OU no arquivo .done local
+is_completed() {
+    [[ -f "${PROGRESS_DIR}/${1}.done" ]] || is_done_in_tasks_md "${1}"
+}
 
 mark_completed() { touch "${PROGRESS_DIR}/${1}.done"; }
 
@@ -349,12 +363,17 @@ main() {
         exit 1
     fi
 
+    [[ -f "${TASKS_MD}" ]] && log "tasks.md: ${TASKS_MD}" || warn "tasks.md não encontrado — usando apenas estado local (.progress/)"
     log "Tasks encontradas: ${#tasks[@]}"
     for t in "${tasks[@]}"; do
         local num
         num=$(get_task_num "$t")
         local status="pendente"
-        is_completed "$num" && status="concluída"
+        if [[ -f "${PROGRESS_DIR}/${num}.done" ]]; then
+            status="concluída (local)"
+        elif is_done_in_tasks_md "${num}"; then
+            status="concluída (tasks.md)"
+        fi
         [[ -n "$(get_saved_session "$num")" ]] && status="interrompida (será retomada)"
         log "  task ${num}: $(get_task_title "$t") [${status}]"
     done
