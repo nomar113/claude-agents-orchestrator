@@ -100,6 +100,12 @@ TASKS_MD="${TASK_DIR}/tasks.md"
 # Timeout por task em segundos (4h 45min — abaixo da janela de 5h do Claude)
 TASK_TIMEOUT_SECS=17100
 
+# Tentativas por task após falha (ex: janela de 5h expirou)
+MAX_RETRIES=5
+
+# Espera entre tentativas em segundos (5 minutos)
+RETRY_DELAY_SECS=300
+
 # Detectado em runtime pelo main() — não altere aqui
 TIMEOUT_CMD=""
 
@@ -268,54 +274,64 @@ run_claude() {
 
 execute_task() {
     local task_file="$1" task_num="$2"
-    local exit_code
+    local exit_code attempt=0
 
-    local saved_session
-    saved_session=$(get_saved_session "${task_num}")
+    while [[ $attempt -le $MAX_RETRIES ]]; do
 
-    # ── Tentativa de retomada (sessão interrompida anteriormente) ──────────
-    if [[ -n "$saved_session" ]]; then
-        warn "Sessão anterior encontrada: ${saved_session}"
-        warn "Tentando retomar de onde parou..."
+        local saved_session
+        saved_session=$(get_saved_session "${task_num}")
 
-        if run_claude "${RESUME_PROMPT}" "${saved_session}" "true"; then
+        # ── Tentativa de retomada (sessão salva de execução anterior) ──────
+        if [[ -n "$saved_session" ]]; then
+            warn "Sessão anterior encontrada: ${saved_session}. Tentando retomar..."
+
+            if run_claude "${RESUME_PROMPT}" "${saved_session}" "true"; then
+                clear_session "${task_num}"
+                return 0
+            fi
+
+            exit_code=$?
+            if [[ $exit_code -eq 124 ]]; then
+                warn "Timeout ao retomar sessão. Iniciando nova execução..."
+            else
+                warn "Retomada falhou (código: ${exit_code}). Iniciando nova execução..."
+            fi
+            clear_session "${task_num}"
+        fi
+
+        # ── Execução (inicial ou re-execução após falha) ────────────────────
+        local new_session
+        new_session=$(uuidgen | tr '[:upper:]' '[:lower:]')
+        save_session "${task_num}" "${new_session}"
+
+        if [[ $attempt -eq 0 ]]; then
+            log "Iniciando claude (session: ${new_session})"
+        else
+            log "Tentativa ${attempt}/${MAX_RETRIES} — nova sessão: ${new_session}"
+        fi
+
+        if run_claude "/executar-task @${task_file}" "${new_session}" "false"; then
             clear_session "${task_num}"
             return 0
         fi
 
         exit_code=$?
-        if [[ $exit_code -eq 124 ]]; then
-            err "Timeout (4h45m) ao retomar sessão ${saved_session}. Task excede a janela de contexto."
-        else
-            warn "Não foi possível retomar sessão ${saved_session} (código: ${exit_code}). Iniciando nova execução..."
+        clear_session "${task_num}"
+
+        ((attempt++)) || true
+
+        if [[ $attempt -le $MAX_RETRIES ]]; then
+            if [[ $exit_code -eq 124 ]]; then
+                warn "Task ${task_num} atingiu o timeout (janela de 5h). Aguardando ${RETRY_DELAY_SECS}s antes de tentar novamente..."
+            else
+                warn "Task ${task_num} falhou (código: ${exit_code}). Aguardando ${RETRY_DELAY_SECS}s antes de tentar novamente..."
+            fi
+            sleep "${RETRY_DELAY_SECS}"
         fi
-        clear_session "${task_num}"
-    fi
 
-    # ── Execução inicial ou re-execução ────────────────────────────────────
-    local new_session
-    new_session=$(uuidgen | tr '[:upper:]' '[:lower:]')
-    save_session "${task_num}" "${new_session}"
+    done
 
-    log "Iniciando claude (session: ${new_session})"
-
-    if run_claude "/executar-task @${task_file}" "${new_session}" "false"; then
-        clear_session "${task_num}"
-        return 0
-    fi
-
-    exit_code=$?
-
-    if [[ $exit_code -eq 124 ]]; then
-        # Timeout: sessão provavelmente ainda existe no histórico do Claude.
-        # O próximo restart tentará retomá-la via --resume.
-        err "Task ${task_num} atingiu o timeout (4h45m)."
-        err "A sessão ${new_session} foi salva. Ao reiniciar o script, a task será retomada."
-    else
-        err "Task ${task_num} falhou com código de saída: ${exit_code}"
-        clear_session "${task_num}"
-    fi
-
+    err "Task ${task_num} falhou após ${MAX_RETRIES} tentativas. Abortando."
     return 1
 }
 

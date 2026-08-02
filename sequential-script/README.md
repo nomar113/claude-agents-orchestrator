@@ -30,12 +30,20 @@ Executa tasks de uma PRD sequencialmente com Claude Code, resistente à janela d
 
 ## Resistência à janela de 5h
 
-Antes de executar cada task, o script gera um UUID e salva em `.progress/N.session`. Se o script for interrompido e relançado:
+Antes de executar cada task, o script gera um UUID e salva em `.progress/N.session`. Quando a janela de 5h expira e o Claude encerra com erro, o script:
 
-1. Detecta o arquivo `.session` da task interrompida
-2. Usa `--resume <uuid>` para retomar a sessão do Claude de onde parou
-3. Se a retomada falhar, inicia uma execução limpa da task
-4. Tasks já concluídas (`.progress/N.done`) são sempre puladas
+1. Aguarda `RETRY_DELAY_SECS` (padrão: 5 minutos) e tenta novamente automaticamente
+2. Repete até `MAX_RETRIES` vezes (padrão: 5 tentativas)
+3. Em cada tentativa, verifica se há sessão salva e usa `--resume <uuid>` para retomar
+4. Se a retomada falhar, inicia uma execução limpa da task
+5. Tasks já concluídas (`.progress/N.done` ou `[x]` no `tasks.md`) são sempre puladas
+
+Os parâmetros podem ser ajustados no topo do script:
+
+```bash
+MAX_RETRIES=5         # tentativas por task
+RETRY_DELAY_SECS=300  # segundos entre tentativas (5 minutos)
+```
 
 ## Comportamento após cada task
 
