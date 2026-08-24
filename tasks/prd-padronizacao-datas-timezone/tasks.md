@@ -5,7 +5,7 @@
 - [x] 1.0 Backend — Configuracao central de timezone UTC
 - [x] 2.0 Backend — Padronizacao de tipos de data nas entidades JPA + migration
 - [x] 3.0 Backend — Correcao do PaymentNotificationTextParser
-- [ ] 4.0 Backend — Padronizacao de DTOs de request/response
+- [x] 4.0 Backend — Padronizacao de DTOs de request/response
 - [x] 5.0 Frontend — Modulo unico de utilitarios de data (src/utils/date.ts)
 - [ ] 6.0 Frontend — Migracao dos componentes consumidores + correcao dos bugs conhecidos
 - [ ] 7.0 Testes E2E (Playwright) + validacao de independencia de timezone ponta a ponta

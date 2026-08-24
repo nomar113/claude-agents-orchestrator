@@ -22,10 +22,10 @@ Padronizar todos os DTOs de request/response que trafegam data/hora, removendo c
 
 ## Subtarefas
 
-- [ ] 4.1 `PaymentNotificationResponse`, `PurchaseResponse`, `PurchaseInvoiceDetailResponse`, `AssociateInvoiceResponse`, `ApiKeyResponse`: remover `.toString()` manual e `@JsonFormat` customizado, expor `Instant`/`LocalDate` nativos.
-- [ ] 4.2 `ManualPaymentNotificationRequest`, `UpdatePurchasedAtRequest`: `purchasedAt` passa a exigir string ISO-8601 com offset/zona explicita (ex: `2026-08-23T10:00:00-03:00`), deserializado para `Instant`.
-- [ ] 4.3 Adicionar log em nivel `WARN` em qualquer endpoint que receba `purchasedAt` sem offset/zona explicita (fallback de compatibilidade para clientes desatualizados), conforme "Monitoramento e Observabilidade" da techspec.md.
-- [ ] 4.4 Escrever testes de unidade e integracao (ver secao de Testes).
+- [x] 4.1 `PaymentNotificationResponse`, `PurchaseResponse`, `PurchaseInvoiceDetailResponse`, `AssociateInvoiceResponse`, `ApiKeyResponse`: remover `.toString()` manual e `@JsonFormat` customizado, expor `Instant`/`LocalDate` nativos.
+- [x] 4.2 `ManualPaymentNotificationRequest`, `UpdatePurchasedAtRequest`: `purchasedAt` passa a exigir string ISO-8601 com offset/zona explicita (ex: `2026-08-23T10:00:00-03:00`), deserializado para `Instant`.
+- [x] 4.3 Adicionar log em nivel `WARN` em qualquer endpoint que receba `purchasedAt` sem offset/zona explicita (fallback de compatibilidade para clientes desatualizados), conforme "Monitoramento e Observabilidade" da techspec.md.
+- [x] 4.4 Escrever testes de unidade e integracao (ver secao de Testes).
 
 ## Detalhes de Implementacao
 
@@ -39,8 +39,8 @@ Ver secao "Endpoints de API" e "Modelos de Dados" da `techspec.md` para a lista 
 
 ## Testes da Tarefa
 
-- [ ] Testes de unidade: serializacao Jackson para `Instant`/`LocalDate` em todos os DTOs afetados (conforme "Abordagem de Testes" da techspec.md).
-- [ ] Testes de integracao: chamada real aos endpoints `POST /api/v0/payment-notifications/manual` e `PATCH .../purchased-at` com payload ISO-8601 com offset, validando persistencia e response corretos; teste do fallback (payload sem offset) validando log `WARN` emitido.
+- [x] Testes de unidade: serializacao Jackson para `Instant`/`LocalDate` em todos os DTOs afetados (conforme "Abordagem de Testes" da techspec.md).
+- [x] Testes de integracao: chamada real aos endpoints `POST /payments/notifications/manual` e `PATCH .../purchased-at` com payload ISO-8601 com offset, validando persistencia e response corretos; teste do fallback (payload sem offset) validando log `WARN` emitido.
 
 <critical>SEMPRE CRIE E EXECUTE OS TESTES DA TAREFA ANTES DE CONSIDERA-LA FINALIZADA</critical>
 

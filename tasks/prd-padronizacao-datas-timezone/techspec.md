@@ -61,7 +61,7 @@ Serialização JSON resultante: todo timestamp de evento vira `Instant`, seriali
 ### Endpoints de API
 
 Nenhum endpoint novo. Contrato de payload muda (breaking change coordenada) nos seguintes:
-- `POST /api/v0/payment-notifications/manual` e `PATCH .../purchased-at`: `purchasedAt` passa a exigir string ISO-8601 com offset/zona explícita (ex: `2026-08-23T10:00:00-03:00`), deserializado para `Instant`.
+- `POST /payments/notifications/manual` e `PATCH .../purchased-at`: `purchasedAt` passa a exigir string ISO-8601 com offset/zona explícita (ex: `2026-08-23T10:00:00-03:00`), deserializado para `Instant`.
 - Responses que hoje têm `cancelledAt: String` (via `.toString()`) e `PurchaseInvoiceDetailResponse.date` (com `@JsonFormat` customizado) passam a serializar como `Instant` nativo (ISO-8601 `Z`).
 
 ### Configuração central de timezone
