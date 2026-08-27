@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Consulta NFC-e</title></head>
+<body>
+  <div class="txtTopo">MERCADO EXEMPLO LTDA</div>
+  <span class="text">CNPJ: 12.345.678/0001-90</span>
+  <span>
+        Rua Exemplo, 123
+        , Bairro Exemplo,Rio de Janeiro - RJ
+      </span>
+
+  <p>N. º: 12345 Série: 1 <strong> Emissão: </strong>27/08/2026 10:15:00-03:00 via consulta pelo QR Code</p>
+
+  <table id="tabResult">
+    <tbody>
+      <tr id="Item1">
+        <td>
+          <span class="txtTit">Arroz Branco</span>
+          <span class="RCod">(Código: 123456)</span>
+          <span class="Rqtd">Qtde.:2,000</span>
+          <span class="RUN">UN: UN</span>
+          <span class="RvlUnit">Vl. Unit.:5,00</span>
+        </td>
+        <td>
+          <span class="valor">10,00</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div id="totalNota">
+    <label>Qtd. total de itens:</label><span class="totalNumb">1</span>
+    <label>Subtotal R$:</label><span class="totalNumb">150,00</span>
+    <label>Descontos R$:</label><span class="totalNumb">10,00</span>
+    <label>Valor a pagar R$:</label><span class="totalNumb txtMax">140,00</span>
+    <span class="totalNumb txtObs">5,00</span>
+  </div>
+
+  <div id="linhaTotal">
+    <label class="tx">Dinheiro</label>
+    <span class="totalNumb txtMax">0,00</span>
+    <span class="totalNumb">140,00</span>
+  </div>
+</body>
+</html>
