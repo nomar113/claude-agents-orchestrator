@@ -10,6 +10,6 @@
 - [ ] 6.0 Gate de acesso por assinatura (SubscriptionGuardFilter)
 - [ ] 7.0 Desativar cadastro publico no backend
 - [ ] 8.0 Frontend: tela de bloqueio por assinatura inativa
-- [ ] 9.0 Frontend: remocao do fluxo de cadastro publico
+- [x] 9.0 Frontend: remocao do fluxo de cadastro publico
 - [ ] 10.0 Landing page estatica de vendas
 - [ ] 11.0 Testes E2E de ponta a ponta
