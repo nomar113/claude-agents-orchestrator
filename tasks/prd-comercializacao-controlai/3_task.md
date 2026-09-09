@@ -20,10 +20,10 @@ Implementar a camada de domínio e os providers do bounded context `billing` que
 
 ## Subtarefas
 
-- [ ] 3.1 Criar os gateways em `domain/billing/gateway`: `FindActiveSubscriptionByGroupIdGateway`, `UpsertSubscriptionGateway`, `FindKiwifyWebhookEventByIdGateway`, `SaveKiwifyWebhookEventGateway`.
-- [ ] 3.2 Implementar os providers correspondentes em `application/billing/application`, usando os repositórios JPA criados na Tarefa 2.0.
-- [ ] 3.3 Criar o `SubscriptionConverter` (`toModel()`/`toEntity()`) seguindo o padrão já usado em outros bounded contexts.
-- [ ] 3.4 Garantir que `UpsertSubscriptionGateway` funcione tanto para criar quanto para atualizar a assinatura de um grupo (upsert por `group_id` único).
+- [x] 3.1 Criar os gateways em `domain/billing/gateway`: `FindActiveSubscriptionByGroupIdGateway`, `UpsertSubscriptionGateway`, `FindKiwifyWebhookEventByIdGateway`, `SaveKiwifyWebhookEventGateway`.
+- [x] 3.2 Implementar os providers correspondentes em `application/billing/application`, usando os repositórios JPA criados na Tarefa 2.0.
+- [x] 3.3 Criar o `SubscriptionConverter` (`toModel()`/`toEntity()`) seguindo o padrão já usado em outros bounded contexts.
+- [x] 3.4 Garantir que `UpsertSubscriptionGateway` funcione tanto para criar quanto para atualizar a assinatura de um grupo (upsert por `group_id` único).
 
 ## Detalhes de Implementação
 
@@ -36,9 +36,9 @@ Ver Tech Spec `Interfaces Principais` para as assinaturas exatas dos gateways. S
 
 ## Testes da Tarefa
 
-- [ ] Testes de unidade dos providers com gateways mockados via lambda (`fun interface`), conforme convenção do projeto.
-- [ ] Teste de integração (H2) do `UpsertSubscriptionGateway` cobrindo os dois caminhos: criação e atualização de uma assinatura existente.
-- [ ] Teste de integração do `FindActiveSubscriptionByGroupIdGateway` retornando `null` para grupo sem assinatura e a assinatura correta para grupo com uma ou mais atualizações de status ao longo do tempo.
+- [x] Testes de unidade dos providers com gateways mockados via lambda (`fun interface`), conforme convenção do projeto.
+- [x] Teste de integração (H2) do `UpsertSubscriptionGateway` cobrindo os dois caminhos: criação e atualização de uma assinatura existente.
+- [x] Teste de integração do `FindActiveSubscriptionByGroupIdGateway` retornando `null` para grupo sem assinatura e a assinatura correta para grupo com uma ou mais atualizações de status ao longo do tempo.
 
 <critical>SEMPRE CRIE E EXECUTE OS TESTES DA TAREFA ANTES DE CONSIDERA-LA FINALIZADA</critical>
 
