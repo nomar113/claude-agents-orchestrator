@@ -80,7 +80,7 @@ Nenhum endpoint novo é exposto ao frontend: o gate de assinatura reaproveita os
 - `SubscriptionGuardFilter`: libera grupos `ACTIVE` (qualquer plano), bloqueia grupos sem linha em `subscriptions`, bloqueia `CANCELLED`/`EXPIRED`, ignora rotas públicas (`/auth/**`, `/webhooks/**`, `/health`).
 
 ### Testes de Integração
-- `POST /webhooks/kiwify` fim a fim com H2: payloads de exemplo para `compra_aprovada` (anual e anual+bump), `compra_reembolsada`, `chargeback`, `subscription_canceled`, `subscription_renewed`; valida efeito em `subscriptions`, `users` e `kiwify_webhook_events`.
+- `POST /webhooks/kiwify` fim a fim contra o MySQL de teste (via `docker-compose`, mesmo padrão já usado pelos demais testes de integração do backend): payloads de exemplo para `compra_aprovada` (anual e anual+bump), `compra_reembolsada`, `chargeback`, `subscription_canceled`, `subscription_renewed`; valida efeito em `subscriptions`, `users` e `kiwify_webhook_events`.
 - Endpoint protegido qualquer (ex.: `GET /purchases`) retornando `402` para grupo sem assinatura e `200` para grupo `ACTIVE`.
 
 ### Testes de E2E
