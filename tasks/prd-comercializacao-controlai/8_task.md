@@ -21,10 +21,10 @@ Tratar a resposta `402` do backend (Tarefa 6.0) no `controlai-frontend`, exibind
 
 ## Subtarefas
 
-- [ ] 8.1 No `httpClient.ts`, detectar respostas `402` e disparar um novo evento (ex.: `ctrl:subscription-inactive`), seguindo o mesmo padrão já usado para `ctrl:auth-failure`.
-- [ ] 8.2 No `AuthContext.tsx` (ou um novo contexto dedicado), escutar esse evento e expor um estado `hasInactiveSubscription` (ou equivalente) para o roteamento.
-- [ ] 8.3 Criar `src/pages/SubscriptionRequiredPage.tsx`: tela informativa (sem link de pagamento) explicando que o acesso está indisponível, com texto neutro definido em conjunto com o usuário (ex.: orientando a verificar o e-mail cadastrado na compra).
-- [ ] 8.4 Em `App.tsx`, renderizar `SubscriptionRequiredPage` no lugar de `TabsLayout` quando `hasInactiveSubscription` for verdadeiro, mantendo o usuário autenticado (não deslogar).
+- [x] 8.1 No `httpClient.ts`, detectar respostas `402` e disparar um novo evento (ex.: `ctrl:subscription-inactive`), seguindo o mesmo padrão já usado para `ctrl:auth-failure`.
+- [x] 8.2 No `AuthContext.tsx` (ou um novo contexto dedicado), escutar esse evento e expor um estado `hasInactiveSubscription` (ou equivalente) para o roteamento.
+- [x] 8.3 Criar `src/pages/SubscriptionRequiredPage.tsx`: tela informativa (sem link de pagamento) explicando que o acesso está indisponível, com texto neutro definido em conjunto com o usuário (ex.: orientando a verificar o e-mail cadastrado na compra).
+- [x] 8.4 Em `App.tsx`, renderizar `SubscriptionRequiredPage` no lugar de `TabsLayout` quando `hasInactiveSubscription` for verdadeiro, mantendo o usuário autenticado (não deslogar).
 
 ## Detalhes de Implementação
 
@@ -38,9 +38,9 @@ Ver Tech Spec `Arquitetura do Sistema > Visão Geral dos Componentes` (fluxo de 
 
 ## Testes da Tarefa
 
-- [ ] Teste de unidade do `httpClient.ts` validando o disparo do evento em resposta `402`.
-- [ ] Teste de unidade/componente da `SubscriptionRequiredPage` (render básico, ausência de links de pagamento).
-- [ ] Teste de integração do roteamento em `App.tsx` mostrando a tela correta conforme o estado de assinatura.
+- [x] Teste de unidade do `httpClient.ts` validando o disparo do evento em resposta `402`.
+- [x] Teste de unidade/componente da `SubscriptionRequiredPage` (render básico, ausência de links de pagamento).
+- [x] Teste de integração do roteamento em `App.tsx` mostrando a tela correta conforme o estado de assinatura.
 
 <critical>SEMPRE CRIE E EXECUTE OS TESTES DA TAREFA ANTES DE CONSIDERA-LA FINALIZADA</critical>
 
