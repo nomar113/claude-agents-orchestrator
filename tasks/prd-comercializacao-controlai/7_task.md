@@ -19,9 +19,9 @@ Remover a possibilidade de qualquer pessoa criar uma conta gratuita diretamente 
 
 ## Subtarefas
 
-- [ ] 7.1 Decidir e implementar a forma de desativação: remover o mapeamento `@PostMapping("/register")` do `AuthController` ou mantê-lo retornando `410 Gone` com mensagem explicando que contas são criadas via assinatura (ver PRD para o texto/tom adequado).
-- [ ] 7.2 Manter `RegisterUserUseCase` e `CreateUserWithPersonalGroupGateway` intactos internamente (são reaproveitados pela Tarefa 5.0), apenas removendo a exposição pública via REST.
-- [ ] 7.3 Atualizar a documentação OpenAPI/Swagger (`springdoc`) para refletir a remoção do endpoint.
+- [x] 7.1 Decidir e implementar a forma de desativação: remover o mapeamento `@PostMapping("/register")` do `AuthController` ou mantê-lo retornando `410 Gone` com mensagem explicando que contas são criadas via assinatura (ver PRD para o texto/tom adequado).
+- [x] 7.2 Manter `RegisterUserUseCase` e `CreateUserWithPersonalGroupGateway` intactos internamente (são reaproveitados pela Tarefa 5.0), apenas removendo a exposição pública via REST.
+- [x] 7.3 Atualizar a documentação OpenAPI/Swagger (`springdoc`) para refletir a remoção do endpoint.
 
 ## Detalhes de Implementação
 
@@ -34,8 +34,8 @@ Ver Tech Spec `Design de Implementação > Endpoints de API`. Esta tarefa é del
 
 ## Testes da Tarefa
 
-- [ ] Teste de integração confirmando que `POST /auth/register` não cria mais um usuário (retorna `404`/`410`, conforme decisão de 7.1).
-- [ ] Teste de regressão confirmando que o fluxo de onboarding automático (Tarefa 5.0) continua criando contas normalmente após esta mudança.
+- [x] Teste de integração confirmando que `POST /auth/register` não cria mais um usuário (retorna `404`/`410`, conforme decisão de 7.1).
+- [x] Teste de regressão confirmando que o fluxo de onboarding automático (Tarefa 5.0) continua criando contas normalmente após esta mudança.
 
 <critical>SEMPRE CRIE E EXECUTE OS TESTES DA TAREFA ANTES DE CONSIDERA-LA FINALIZADA</critical>
 

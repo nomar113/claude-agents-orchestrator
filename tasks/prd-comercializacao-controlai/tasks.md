@@ -8,7 +8,7 @@
 - [x] 4.0 Endpoint de webhook da Kiwify com idempotencia
 - [x] 5.0 Onboarding automatico de conta pos-compra
 - [x] 6.0 Gate de acesso por assinatura (SubscriptionGuardFilter)
-- [ ] 7.0 Desativar cadastro publico no backend
+- [x] 7.0 Desativar cadastro publico no backend
 - [ ] 8.0 Frontend: tela de bloqueio por assinatura inativa
 - [x] 9.0 Frontend: remocao do fluxo de cadastro publico
 - [ ] 10.0 Landing page estatica de vendas
