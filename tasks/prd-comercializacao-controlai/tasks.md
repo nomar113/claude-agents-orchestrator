@@ -11,5 +11,5 @@
 - [x] 7.0 Desativar cadastro publico no backend
 - [x] 8.0 Frontend: tela de bloqueio por assinatura inativa
 - [x] 9.0 Frontend: remocao do fluxo de cadastro publico
-- [ ] 10.0 Landing page estatica de vendas
+- [x] 10.0 Landing page estatica de vendas
 - [ ] 11.0 Testes E2E de ponta a ponta
