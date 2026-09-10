@@ -20,10 +20,10 @@ Implementar o filtro que efetivamente bloqueia o acesso de grupos sem assinatura
 
 ## Subtarefas
 
-- [ ] 6.1 Criar `SubscriptionGuardFilter` em `config/`, lendo o `groupId` do `RequestContext` (já disponível via `JwtRequestContext`/`ApiKeyAuthentication`) e consultando `FindActiveSubscriptionByGroupIdGateway`.
-- [ ] 6.2 Responder `402 Payment Required` (corpo JSON simples, ex.: `{"error": "subscription_inactive"}`) quando o grupo não possui assinatura com `status = ACTIVE`.
-- [ ] 6.3 Excluir explicitamente do filtro as rotas `/auth/**`, `/webhooks/**`, `/health`, `/actuator/health` (mesma lista de `permitAll` do `SecurityConfig`).
-- [ ] 6.4 Registrar o filtro no `SecurityConfig`, posicionado depois da autenticação (JWT/API Key) já resolvida.
+- [x] 6.1 Criar `SubscriptionGuardFilter` em `config/`, lendo o `groupId` do `RequestContext` (já disponível via `JwtRequestContext`/`ApiKeyAuthentication`) e consultando `FindActiveSubscriptionByGroupIdGateway`.
+- [x] 6.2 Responder `402 Payment Required` (corpo JSON simples, ex.: `{"error": "subscription_inactive"}`) quando o grupo não possui assinatura com `status = ACTIVE`.
+- [x] 6.3 Excluir explicitamente do filtro as rotas `/auth/**`, `/webhooks/**`, `/health`, `/actuator/health` (mesma lista de `permitAll` do `SecurityConfig`).
+- [x] 6.4 Registrar o filtro no `SecurityConfig`, posicionado depois da autenticação (JWT/API Key) já resolvida.
 
 ## Detalhes de Implementação
 
@@ -37,8 +37,8 @@ Ver Tech Spec `Arquitetura do Sistema > Visão Geral dos Componentes` e `Design 
 
 ## Testes da Tarefa
 
-- [ ] Teste de unidade do filtro cobrindo: grupo ativo, grupo sem assinatura, grupo cancelado, e rota pública (bypass).
-- [ ] Teste de integração (H2) chamando um endpoint protegido real (ex.: `GET /purchases`) com grupos em cada um dos estados acima, validando o código de status HTTP retornado.
+- [x] Teste de unidade do filtro cobrindo: grupo ativo, grupo sem assinatura, grupo cancelado, e rota pública (bypass).
+- [x] Teste de integração chamando um endpoint protegido real (`GET /purchases`) com grupos em cada um dos estados acima, validando o código de status HTTP retornado.
 
 <critical>SEMPRE CRIE E EXECUTE OS TESTES DA TAREFA ANTES DE CONSIDERA-LA FINALIZADA</critical>
 
