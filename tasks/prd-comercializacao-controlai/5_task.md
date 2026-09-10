@@ -20,10 +20,10 @@ Conectar o `HandleKiwifyWebhookUseCase` (Tarefa 4.0) à criação automática de
 
 ## Subtarefas
 
-- [ ] 5.1 No `HandleKiwifyWebhookUseCase`, para eventos `compra_aprovada`: buscar usuário por e-mail (`FindUserByEmailGateway`); se não existir, criar via `CreateUserWithPersonalGroupGateway` usando nome/e-mail vindos do payload da Kiwify.
-- [ ] 5.2 Vincular/atualizar a `Subscription` ao `group_id` do usuário encontrado ou recém-criado (via `UpsertSubscriptionGateway` da Tarefa 3.0).
-- [ ] 5.3 Para usuários recém-criados, gerar um token de definição de senha reaproveitando `CreatePasswordResetTokenGateway` e enviar e-mail via `EmailGateway`/`ResendEmailClient`, com um template "sua conta ControlAI foi criada — defina sua senha" (variação do template de reset de senha já existente).
-- [ ] 5.4 Para usuários já existentes (grandfathered ou compra repetida), pular a criação de conta e o envio do e-mail de "defina sua senha" (enviar, no máximo, uma confirmação de renovação/ativação, se aplicável).
+- [x] 5.1 No `HandleKiwifyWebhookUseCase`, para eventos `compra_aprovada`: buscar usuário por e-mail (`FindUserByEmailGateway`); se não existir, criar via `CreateUserWithPersonalGroupGateway` usando nome/e-mail vindos do payload da Kiwify.
+- [x] 5.2 Vincular/atualizar a `Subscription` ao `group_id` do usuário encontrado ou recém-criado (via `UpsertSubscriptionGateway` da Tarefa 3.0).
+- [x] 5.3 Para usuários recém-criados, gerar um token de definição de senha reaproveitando `CreatePasswordResetTokenGateway` e enviar e-mail via `EmailGateway`/`ResendEmailClient`, com um template "sua conta ControlAI foi criada — defina sua senha" (variação do template de reset de senha já existente).
+- [x] 5.4 Para usuários já existentes (grandfathered ou compra repetida), pular a criação de conta e o envio do e-mail de "defina sua senha" — exceto quando o usuário existente ainda não definiu senha (`password_hash IS NULL`), caso em que o e-mail é reenviado a cada `compra_aprovada` até a senha ser definida; isso cobre tanto o cliente que perdeu a corrida de criação de conta contra um webhook concorrente quanto uma falha parcial anterior no envio do e-mail (ver review da Tarefa 5.0).
 
 ## Detalhes de Implementação
 
@@ -36,9 +36,9 @@ Ver Tech Spec `Arquitetura do Sistema > Visão Geral dos Componentes` (reaprovei
 
 ## Testes da Tarefa
 
-- [ ] Teste de unidade: e-mail novo → cria usuário + grupo + assinatura + dispara e-mail.
-- [ ] Teste de unidade: e-mail já existente → não cria usuário duplicado, apenas atualiza a assinatura do grupo já existente.
-- [ ] Teste de integração (H2) do fluxo completo webhook → banco, verificando que a constraint de e-mail único nunca é violada mesmo em compras repetidas.
+- [x] Teste de unidade: e-mail novo → cria usuário + grupo + assinatura + dispara e-mail.
+- [x] Teste de unidade: e-mail já existente → não cria usuário duplicado, apenas atualiza a assinatura do grupo já existente.
+- [x] Teste de integração (MySQL de teste via docker-compose) do fluxo completo webhook → banco, verificando que a constraint de e-mail único nunca é violada mesmo em compras repetidas sequenciais e em duas requisições concorrentes de verdade para o mesmo e-mail novo.
 
 <critical>SEMPRE CRIE E EXECUTE OS TESTES DA TAREFA ANTES DE CONSIDERA-LA FINALIZADA</critical>
 
